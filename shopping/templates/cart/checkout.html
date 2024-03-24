@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Checkout {% endblock %}</h1>{% endblock %}
+
+{% block content %}
+    <div class="product">
+        <div>
+               Your order is successfully placed. <br>
+        </div>
+        <div><a href="{{ url_for('product.index') }}">Continue Shopping</a></div>
+    </div>
+{% endblock %}

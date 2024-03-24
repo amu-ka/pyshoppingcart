@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Products {% endblock %}</h1>
+  {% if g.customer['id'] == 1 %}
+    <a class="action" href="{{ url_for('product.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="product">
+        <div>
+            <div>
+                <table>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Price</th><th>Added Date</th><th>Updated Date</th>
+                    </tr>
+                    {% for product in products %}
+                      <tr>
+                         <td>{{product['id']}}</td>
+                          <td>{{product['name']}}</td>
+                          <td>{{product['price']}}</td>
+                          <td>{{product['created'].strftime('%Y-%m-%d')}}</td>
+                          <td>{{"" if not product['updated'] else product['updated'].strftime('%Y-%m-%d')}}</td>
+                          <td>{% if g.customer['id'] == 1 %}
+                                <a class="action" href="{{ url_for('product.update', id=product['id']) }}">Edit</a>
+                              {% endif %}
+                          </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

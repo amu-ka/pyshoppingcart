@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Cart Items {% endblock %}</h1>
+  {% if g.customer['id'] == 1 %}
+    <a class="action" href="{{ url_for('cart.cart') }}">Your Cart</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="product">
+            <div>
+                {% if not cart_items %}
+                  <div> <p>
+                      Your Car is empty
+                  </p>
+                      <a href="{{ url_for('product.index') }}">Continue Shopping</a>
+                  </div>
+                {% else %}
+                <div>
+                <table>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Item Price</th><th>Quantity</th><th>Total Price</th>
+                    </tr>
+                    {% for product in cart_items %}
+                      <tr>
+                         <td>{{product['id']}}</td>
+                          <td>{{product['name']}}</td>
+                          <td>{{product['price']}}</td>
+                          <td>{{product['quantity'] }}</td>
+                          <td>{{product['price'] * product['quantity']}}</td>
+                          <td>
+                              <a class="action" href="{{ url_for('cart.update', id=product['id']) }}">Edit</a>
+                          </td>
+                      </tr>
+                    {% endfor %}
+                </table>
+                </div>
+                <div>
+                    <form action="{{ url_for('cart.checkout')}}" method="post">
+                        <input class="danger" type="submit" value="Checkout" onclick="return alert('Your order is successfully placed!');">
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
